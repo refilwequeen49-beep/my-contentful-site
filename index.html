@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Contentful Portfolio</title>
 
-  <!-- Connect your CSS theme -->
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Optional: Nice Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
@@ -16,7 +14,6 @@
   <h1>🌟 My Portfolio</h1>
   <p style="text-align:center;">Powered by Contentful and GitHub Pages</p>
 
-  <!-- Theme controls (optional) -->
   <div style="text-align:center; margin-bottom: 12px;">
     <select id="theme-select" aria-label="Choose theme">
       <option value="light">Light</option>
@@ -26,16 +23,21 @@
     <button id="toggle-theme">Toggle theme</button>
   </div>
 
-  <!-- This is where your content will appear. NOTE: id is "posts" to match app.js -->
-  <div id="posts"></div>
+  <!-- content container: "posts" is what the scripts expect -->
+  <div id="posts">
+    <!-- Static fallback so at least something shows while debugging -->
+    <div class="post" id="fallback">
+      <h2>Portfolio loading…</h2>
+      <p>If this message stays and you see no other items, open the browser console for errors.</p>
+    </div>
+  </div>
 
-  <!-- Contentful browser SDK (required if app.js uses contentful.createClient in the browser) -->
-  <script src="https://unpkg.com/contentful@latest/dist/contentful.browser.min.js"></script>
+  <!-- I removed the Contentful SDK dependency and replaced app.js with a fetch-based script (app.js below).
+       If you prefer the SDK approach, re-add:
+       <script src="https://unpkg.com/contentful@latest/dist/contentful.browser.min.js"></script>
+  -->
 
-  <!-- Theme switcher -->
   <script src="theme.js"></script>
-
-  <!-- Connect your JavaScript that fetches data -->
   <script src="app.js"></script>
 
   <noscript>
