@@ -1,37 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>My Contentful Site</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Contentful Portfolio</title>
+
+  <!-- Connect your CSS theme -->
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Optional: Nice Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
-  <header class="site-header">
-    <h1>My Blog</h1>
+  <h1>🌟 My Portfolio</h1>
+  <p style="text-align:center;">Powered by Contentful and GitHub Pages</p>
 
-    <!-- Theme controls -->
-    <div class="theme-controls" aria-hidden="false">
-      <label for="theme-select" class="visually-hidden">Choose theme</label>
-      <select id="theme-select" aria-label="Choose theme">
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-        <option value="solarized">Solarized</option>
-      </select>
-      <button id="toggle-theme" aria-label="Toggle theme">Toggle</button>
-    </div>
-  </header>
+  <!-- This is where your content will appear -->
+  <div id="content"></div>
 
-  <main>
-    <div id="posts">Loading...</div>
-  </main>
-
-  <!-- Contentful SDK -->
-  <script src="https://unpkg.com/contentful/dist/contentful.browser.min.js"></script>
-
-  <!-- Theme script (handles selection and persistence) -->
-  <script src="theme.js"></script>
-
-  <!-- Your JS file -->
+  <!-- Connect your JavaScript that fetches data -->
   <script src="app.js"></script>
 </body>
 </html>
