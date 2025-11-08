@@ -1,0 +1,84 @@
+:root{
+  --bg: #ffffff;
+  --text: #0b1220;
+  --accent: #0366d6;
+  --post-bg: #f6f8fa;
+  --muted: #57606a;
+  --radius: 8px;
+}
+
+/* Theme overrides */
+.theme-dark {
+  --bg: #0b1220;
+  --text: #e6eef8;
+  --accent: #60a5fa;
+  --post-bg: #0f1720;
+  --muted: #9fb4d6;
+}
+
+.theme-solarized {
+  --bg: #fdf6e3;
+  --text: #586e75;
+  --accent: #b58900;
+  --post-bg: #eee8d5;
+  --muted: #657b83;
+}
+
+/* Base layout */
+html,body{
+  height:100%;
+}
+body{
+  margin:0;
+  padding:1rem;
+  background:var(--bg);
+  color:var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  transition: background .25s ease, color .25s ease;
+}
+
+/* Header and controls */
+.site-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  margin-bottom:1rem;
+}
+.theme-controls{
+  display:flex;
+  gap:.5rem;
+  align-items:center;
+}
+
+/* Posts */
+.post{
+  background:var(--post-bg);
+  color:var(--text);
+  border-radius:var(--radius);
+  padding:1rem;
+  margin-bottom:1rem;
+  box-shadow: 0 1px 3px rgba(2,6,23,0.06);
+  transition: background .25s, color .25s;
+}
+.post img{
+  max-width:100%;
+  height:auto;
+  border-radius:6px;
+  display:block;
+  margin:0.5rem 0;
+}
+
+/* Small helpers */
+.visually-hidden{
+  position: absolute !important;
+  height: 1px; width: 1px; overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+/* Focus styles */
+button:focus, select:focus, a:focus {
+  outline: 3px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  outline-offset: 2px;
+}
