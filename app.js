@@ -1,5 +1,4 @@
-// 👇 Put your Contentful keys here:
-const SPACE_ID = 4dyl0nfzl9r9;
+const SPACE_ID =4dyl0nfzl9r9;
 const ACCESS_TOKEN = iM5jiM8vZ134UphU8EidL1zsZ6-c1v8kAiP8311IhHY
 
 // Connect to Contentful
