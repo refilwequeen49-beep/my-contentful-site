@@ -1,76 +1,46 @@
-// app.js - improved and robust
-const SPACE_ID = '4dyI0nFzJ9r9';
-const ACCESS_TOKEN = 'iM5jiM8vZ134UphU8EidL1zsZ6-c1v8kAiP8311IhHY';
+// Your real Contentful details
+const SPACE_ID = '4dyI0nFzJ9r9'; // replace with your real Space ID
+const ACCESS_TOKEN = 'iM5jIMbVZ13U4phU8EidLtzs6-ctVbKAiPB311fhHY'; // replace with your Content Delivery API token
 
-document.addEventListener('DOMContentLoaded', () => {
-  const postsContainer = document.getElementById('posts');
-  if (!postsContainer) {
-    console.error('No #posts element found in the page.');
-    return;
-  }
+// Contentful API URL
+const API_URL = `https://cdn.contentful.com/spaces/${SPACE_ID}/environments/master/entries?access_token=${ACCESS_TOKEN}`;
 
-  // Ensure the Contentful SDK is loaded
-  if (!window.contentful || typeof window.contentful.createClient !== 'function') {
-    postsContainer.innerHTML = '<p style="text-align:center; color:#a00;">Unable to load content: Contentful SDK missing.</p>';
-    console.error('Contentful SDK not found. Make sure the script from unpkg.com/contentful is included before app.js.');
-    return;
-  }
+async function loadContent() {
+  try {
+    const response = await fetch(API_URL);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
 
-  const client = contentful.createClient({
-    space: SPACE_ID,
-    accessToken: ACCESS_TOKEN
-  });
+    const data = await response.json();
+    const contentDiv = document.getElementById('content');
+    contentDiv.innerHTML = '';
 
-  postsContainer.innerHTML = '<p style="text-align:center; color:#666;">Loading portfolio items…</p>';
+    if (data.items.length === 0) {
+      contentDiv.innerHTML = '<p>No content found. Make sure you have published entries in Contentful.</p>';
+      return;
+    }
 
-  client.getEntries()
-    .then(response => {
-      postsContainer.innerHTML = ''; // clear loading message
+    data.items.forEach((item) => {
+      const post = document.createElement('div');
+      post.classList.add('post');
 
-      if (!response.items || response.items.length === 0) {
-        postsContainer.innerHTML = '<p style="text-align:center; color:#666;">No entries found in Contentful.</p>';
-        return;
-      }
+      const title = item.fields.title ? item.fields.title : 'Untitled';
+      const description = item.fields.description ? item.fields.description : 'No description available.';
 
-      response.items.forEach(item => {
-        const title = item.fields && item.fields.title ? item.fields.title : 'Untitled';
-        const body = item.fields && item.fields.body ? item.fields.body : '';
-        const image = item.fields && item.fields.image ? item.fields.image : null;
+      post.innerHTML = `
+        <h2>${title}</h2>
+        <p>${description}</p>
+      `;
 
-        // body may be rich text object in some Contentful setups.
-        let bodyHtml = '';
-        if (typeof body === 'string') {
-          bodyHtml = `<p>${body}</p>`;
-        } else if (body && body.content) {
-          // crude fallback for rich text -> plain text
-          const text = JSON.stringify(body).replace(/\\n/g, ' ');
-          bodyHtml = `<pre style="white-space:pre-wrap">${text}</pre>`;
-        } else {
-          bodyHtml = '';
-        }
-
-        const post = document.createElement('div');
-        post.className = 'post';
-        post.innerHTML = `
-          <h2>${escapeHtml(title)}</h2>
-          ${image && image.fields && image.fields.file && image.fields.file.url ? `<img src="https:${image.fields.file.url}" alt="${escapeHtml(title)}">` : ''}
-          ${bodyHtml}
-        `;
-        postsContainer.appendChild(post);
-      });
-    })
-    .catch(error => {
-      console.error('Error loading content from Contentful:', error);
-      postsContainer.innerHTML = `<p style="text-align:center; color:#a00;">Error loading content. Open the browser console for details.</p>`;
+      contentDiv.appendChild(post);
     });
-});
-
-// small helper to avoid injecting raw HTML from Contentful titles
-function escapeHtml(str) {
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+  } catch (error) {
+    console.error('Error loading content:', error);
+    document.getElementById('content').innerHTML =
+      '<p>Error loading content. Please check your API keys or published entries.</p>';
+  }
 }
+
+// Run the function
+loadContent();
