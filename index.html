@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Contentful Portfolio</title>
 
   <!-- Connect your CSS theme -->
@@ -16,10 +16,30 @@
   <h1>🌟 My Portfolio</h1>
   <p style="text-align:center;">Powered by Contentful and GitHub Pages</p>
 
-  <!-- This is where your content will appear -->
-  <div id="content"></div>
+  <!-- Theme controls (optional) -->
+  <div style="text-align:center; margin-bottom: 12px;">
+    <select id="theme-select" aria-label="Choose theme">
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+      <option value="solarized">Solarized</option>
+    </select>
+    <button id="toggle-theme">Toggle theme</button>
+  </div>
+
+  <!-- This is where your content will appear. NOTE: id is "posts" to match app.js -->
+  <div id="posts"></div>
+
+  <!-- Contentful browser SDK (required if app.js uses contentful.createClient in the browser) -->
+  <script src="https://unpkg.com/contentful@latest/dist/contentful.browser.min.js"></script>
+
+  <!-- Theme switcher (keeps your theme.js functionality) -->
+  <script src="theme.js"></script>
 
   <!-- Connect your JavaScript that fetches data -->
   <script src="app.js"></script>
+
+  <noscript>
+    <p style="text-align:center; color:#a00;">JavaScript is required to load portfolio items from Contentful.</p>
+  </noscript>
 </body>
 </html>
